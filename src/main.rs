@@ -1,8 +1,9 @@
-use druid::widget::{Flex, TextBox};
+use druid::widget::{Button, Flex, TextBox, CrossAxisAlignment};
 use druid::{AppLauncher, Data, Lens, LocalizedString, Widget, WindowDesc, WidgetExt};
 
 const WINDOW_TITLE: LocalizedString<EditState> = LocalizedString::new("blink");
 const WINDOW_SIZE: (f64, f64) = (600.0, 600.0);
+const MENU_HEIGHT: f64 = 40.0;
 const TEXTBOX_PADDING: f64 = 20.0;
 
 #[derive(Clone, Data, Lens)]
@@ -27,13 +28,23 @@ fn main() {
 }
 
 fn build_root_widget() -> impl Widget<EditState> {
+    let menu = Flex::row()
+        .cross_axis_alignment(CrossAxisAlignment::Center)
+        .with_child(Button::new("File")
+            .fix_height(MENU_HEIGHT))
+        .with_spacer(10.0)
+        .with_child(Button::new("Edit")
+            .fix_height(MENU_HEIGHT));
+
     let textbox = TextBox::multiline()
         .with_line_wrapping(false)
         .lens(EditState::text)
-        .fix_height(WINDOW_SIZE.0 - TEXTBOX_PADDING)
-        .fix_width(WINDOW_SIZE.1 - TEXTBOX_PADDING);
+        .fix_height(WINDOW_SIZE.0 - TEXTBOX_PADDING - MENU_HEIGHT)
+        .fix_width(WINDOW_SIZE.1 - TEXTBOX_PADDING - MENU_HEIGHT);
 
     Flex::column()
+        .with_child(menu)
+        .with_spacer(TEXTBOX_PADDING)
         .with_child(textbox)
         .center()
 }
