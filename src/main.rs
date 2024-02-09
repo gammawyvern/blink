@@ -1,8 +1,8 @@
 use druid::widget::{Button, Flex, TextBox, CrossAxisAlignment};
-use druid::{AppLauncher, Data, Lens, LocalizedString, Widget, WindowDesc, WidgetExt};
+use druid::{Color, AppLauncher, Data, Lens, LocalizedString, Widget, WindowDesc, WidgetExt};
 
 const WINDOW_TITLE: LocalizedString<EditState> = LocalizedString::new("blink");
-const WINDOW_SIZE: (f64, f64) = (600.0, 600.0);
+const WINDOW_SIZE: (f64, f64) = (600.0, 100.0);
 const MENU_HEIGHT: f64 = 40.0;
 
 #[derive(Clone, Data, Lens)]
@@ -16,6 +16,7 @@ fn main() {
         .window_size(WINDOW_SIZE)
         .show_titlebar(false)
         .resizable(false);
+        //.transparent(true);
 
     let initial_state = EditState {
         text: "".into(),
@@ -37,12 +38,14 @@ fn build_root_widget() -> impl Widget<EditState> {
 
     let textbox = TextBox::multiline()
         .with_line_wrapping(false)
+        .border(Color::rgba(0.0, 0.0, 0.0, 0.0), 10.0)
+        .expand_width()
         .lens(EditState::text);
 
     Flex::column()
         .with_default_spacer()
         .with_child(menu)
         .with_default_spacer()
-        .with_child(textbox.expand_width())
-        .background(druid::Color::SILVER)
+        .with_child(textbox)
+        .background(Color::SILVER)
 }
