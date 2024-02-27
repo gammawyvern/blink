@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTextEdit, QFileDialog, QPushButton
+from PyQt5.QtCore import Qt
 
 class TextEditor(QMainWindow):
     def __init__(self):
@@ -6,6 +7,7 @@ class TextEditor(QMainWindow):
 
         self.setWindowTitle("blink")
         self.setGeometry(100, 100, 800, 600)
+        self.setWindowFlags( Qt.CustomizeWindowHint | Qt.FramelessWindowHint)
 
         self.text_edit = QTextEdit(self)
         self.setCentralWidget(self.text_edit)
