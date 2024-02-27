@@ -1,19 +1,19 @@
 QMainWindow {
-    background-color: #f0f0f0;
+    background-color: #505050;
 }
 
 QTextEdit {
     font-family: Arial;
     font-size: 14px;
-    color: #333333;
-    background-color: #ffffff;
-    border: 1px solid #cccccc;
+    color: #b8b8b8;
+    background-color: #404040;
+    border: 4px solid #dddddd;
 }
 
 QPushButton {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
+    background-color: #505050;
+    border: 2px solid #dddddd;
+    color: #b8b8b8;
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
