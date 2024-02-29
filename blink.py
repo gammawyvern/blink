@@ -9,11 +9,8 @@ if __name__ == "__main__":
         app.setStyleSheet(file.read())
 
     window = BlinkEditor()
-    if len(sys.argv) > 1:
-        for file_path in sys.argv[1:]:
-            window.load_tab(file_path);
-    else:
-        window.create_tab();
+    for file_path in sys.argv[1:]:
+        window.load_tab(file_path);
 
     window.show()
     app.exec_()
