@@ -10,7 +10,7 @@ if __name__ == "__main__":
 
     window = BlinkEditor()
     for file_path in sys.argv[1:]:
-        window.load_tab(file_path);
+        window.load_tab(file_path)
 
     window.show()
     app.exec_()
