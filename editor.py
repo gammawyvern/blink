@@ -1,4 +1,5 @@
-from PyQt5.QtWidgets import QMainWindow, QTextEdit, QFileDialog, QPushButton
+from PyQt5.QtWidgets import QMainWindow, QTextEdit
+from PyQt5.QtWidgets import QFileDialog, QPushButton
 from PyQt5.QtCore import Qt
 
 class BlinkEditor(QMainWindow):
@@ -22,7 +23,7 @@ class BlinkEditor(QMainWindow):
         toolbar.addWidget(open_button)
         toolbar.addWidget(save_button)
 
-        # self.statusBar()
+        self.statusBar()
 
         if file_path:
             self.open_file(file_path);
