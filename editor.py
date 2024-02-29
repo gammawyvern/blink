@@ -34,7 +34,10 @@ class BlinkEditor(QMainWindow):
         toolbar.addWidget(open_button)
         toolbar.addWidget(save_button)
 
+    ########################################
     # Tab control / file io
+    ########################################
+
     def create_tab(self):
         text_buffer = QTextEdit(self) 
         text_buffer.file_path = None;
@@ -84,22 +87,28 @@ class BlinkEditor(QMainWindow):
             file_name = file_info.fileName()
             self.tab_widget.setTabText(current_index, file_name)
 
+    ########################################
     # Shortcut setup / functions
+    ########################################
+
     def setup_shorcuts(self):
         new_shortcut = QShortcut(Qt.CTRL + Qt.Key_T, self)
         new_shortcut.activated.connect(self.create_tab)
 
-        save_shortcut = QShortcut(Qt.CTRL + Qt.Key_S, self)
-        save_shortcut.activated.connect(self.save_tab)
-
         open_shortcut = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_O), self)
         open_shortcut.activated.connect(self.load_tab)
+
+        save_shortcut = QShortcut(Qt.CTRL + Qt.Key_S, self)
+        save_shortcut.activated.connect(self.save_tab)
 
         next_tab_shortcut = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Tab), self)
         next_tab_shortcut.activated.connect(self.next_tab)
 
         prev_tab_shortcut = QShortcut(QKeySequence(Qt.CTRL + Qt.SHIFT + Qt.Key_Tab), self)
         prev_tab_shortcut.activated.connect(self.prev_tab)
+
+        del_tab_shortcut = QShortcut(Qt.CTRL + Qt.Key_W, self)
+        del_tab_shortcut.activated.connect(self.delete_current_tab)
 
     def next_tab(self):
         current_index = (self.tab_widget.currentIndex() + 1) % self.tab_widget.count()
@@ -108,4 +117,8 @@ class BlinkEditor(QMainWindow):
     def prev_tab(self):
         current_index = (self.tab_widget.currentIndex() - 1) % self.tab_widget.count()
         self.tab_widget.setCurrentIndex(current_index)
+
+    def delete_current_tab(self):
+        current_index = self.tab_widget.currentIndex()
+        self.tab_widget.removeTab(current_index)
 
