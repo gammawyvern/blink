@@ -32,6 +32,16 @@ class BlinkEditor(QMainWindow):
         # Setup keyboard shortcuts
         save_shortcut = QShortcut(QKeySequence.Save, self)
         save_shortcut.activated.connect(self.save_tab)
+        open_shortcut = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_O), self)
+        open_shortcut.activated.connect(self.load_tab)
+
+        next_tab_shortcut = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Tab), self)
+        next_tab_shortcut.activated.connect(self.next_tab)
+        prev_tab_shortcut = QShortcut(QKeySequence(Qt.CTRL + Qt.SHIFT + Qt.Key_Tab), self)
+        prev_tab_shortcut.activated.connect(self.prev_tab)
+
+
+
 
     def create_tab(self):
         text_buffer = QTextEdit(self) 
@@ -80,4 +90,12 @@ class BlinkEditor(QMainWindow):
         file_info = QFileInfo(file_path)
         file_name = file_info.fileName()
         self.tab_widget.setTabText(current_index, file_name)
+
+    def next_tab(self):
+        current_index = (self.tab_widget.currentIndex() + 1) % self.tab_widget.count()
+        self.tab_widget.setCurrentIndex(current_index)
+
+    def prev_tab(self):
+        current_index = (self.tab_widget.currentIndex() - 1) % self.tab_widget.count()
+        self.tab_widget.setCurrentIndex(current_index)
 
