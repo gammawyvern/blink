@@ -92,8 +92,10 @@ class BlinkEditor(QMainWindow):
     ########################################
 
     def setup_shorcuts(self):
-        new_shortcut = QShortcut(Qt.CTRL + Qt.Key_N, self)
-        new_shortcut.activated.connect(self.create_tab)
+        new_shortcut_n = QShortcut(Qt.CTRL + Qt.Key_N, self)
+        new_shortcut_t = QShortcut(Qt.CTRL + Qt.Key_T, self)
+        new_shortcut_n.activated.connect(self.create_tab)
+        new_shortcut_t.activated.connect(self.create_tab)
 
         open_shortcut = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_O), self)
         open_shortcut.activated.connect(self.load_tab)
