@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QTextEdit, QTabWidget
-from PyQt5.QtWidgets import QFileDialog, QPushButton
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QFileDialog, QPushButton, QStatusBar
+from PyQt5.QtCore import Qt, QFileInfo
 
 class BlinkEditor(QMainWindow):
     def __init__(self):
@@ -23,8 +23,6 @@ class BlinkEditor(QMainWindow):
         toolbar.addWidget(open_button)
         toolbar.addWidget(save_button)
 
-        # self.statusBar()
-
     def create_tab(self, file_path=None):
         text_buffer = QTextEdit(self) 
 
@@ -34,8 +32,10 @@ class BlinkEditor(QMainWindow):
         with open(file_path, 'r') as file:
             content = file.read()
             text_buffer.setPlainText(content)
+        file_name = QFileInfo(file_path).fileName();
 
-        self.tab_widget.addTab(text_buffer, "untitled" if not file_path else file_path)
+        self.tab_widget.addTab(text_buffer, "untitled" if not file_path else file_name)
+        self.tab_widget.setTabPosition(QTabWidget.South)
 
     def save_tab(self):
         current_index = self.tab_widget.currentIndex()
