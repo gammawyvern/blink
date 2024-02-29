@@ -39,13 +39,13 @@ class BlinkEditor(QMainWindow):
         self.setCentralWidget(self.tab_widget)
 
         new_button = QPushButton("New", self)
-        new_button.clicked.connect(self.create_tab)
+        new_button.clicked.connect(lambda event: self.create_tab())
 
         open_button = QPushButton("Open", self)
-        open_button.clicked.connect(self.load_tab)
+        open_button.clicked.connect(lambda event: self.load_tab())
 
         save_button = QPushButton("Save", self)
-        save_button.clicked.connect(self.save_tab)
+        save_button.clicked.connect(lambda event: self.save_tab())
 
         toolbar = self.addToolBar("Toolbar")
         toolbar.addWidget(new_button)
