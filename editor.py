@@ -5,6 +5,24 @@ from PyQt5.QtGui import QKeySequence
 
 import os
 
+########################################
+# Decorator to update focus
+########################################
+
+from functools import wraps
+
+def update_focus_decorator(func):
+    @wraps(func)
+    def wrapper(self, *args, **kwargs):
+        result = func(self, *args, **kwargs)
+        self.update_focus()
+        return result
+    return wrapper
+
+########################################
+# Main blink text editor class
+########################################
+
 class BlinkEditor(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -35,9 +53,21 @@ class BlinkEditor(QMainWindow):
         toolbar.addWidget(save_button)
 
     ########################################
+    # Decorator functions 
+    ########################################
+
+    def update_focus(self):
+        current_index = self.tab_widget.currentIndex()
+
+        if current_index != -1:
+            current_widget = self.tab_widget.widget(current_index)
+            current_widget.setFocus()
+
+    ########################################
     # Tab control / file io
     ########################################
 
+    @update_focus_decorator
     def create_tab(self):
         text_buffer = QTextEdit(self) 
         text_buffer.file_path = None;
@@ -46,7 +76,9 @@ class BlinkEditor(QMainWindow):
         index = self.tab_widget.addTab(text_buffer, file_name)
         self.tab_widget.setTabPosition(QTabWidget.South)
         self.tab_widget.setCurrentIndex(index)
+        text_buffer.setFocus()
 
+    @update_focus_decorator
     def load_tab(self, file_path=None):
         text_buffer = QTextEdit(self) 
         file_name = "untitled"
@@ -66,7 +98,9 @@ class BlinkEditor(QMainWindow):
             index = self.tab_widget.addTab(text_buffer, file_name)
             self.tab_widget.setTabPosition(QTabWidget.South)
             self.tab_widget.setCurrentIndex(index)
+            text_buffer.setFocus()
 
+    @update_focus_decorator
     def save_tab(self):
         current_index = self.tab_widget.currentIndex()
         current_widget = self.tab_widget.widget(current_index)
@@ -74,9 +108,8 @@ class BlinkEditor(QMainWindow):
         if current_index == -1:
             return
 
-        if getattr(current_widget, 'file_path', None):
-            file_path = current_widget.file_path
-        else:
+        file_path = getattr(current_widget, 'file_path', None)
+        if not file_path:
             file_path, _ = QFileDialog.getSaveFileName(self)
 
         if file_path:
@@ -85,9 +118,7 @@ class BlinkEditor(QMainWindow):
                 file.write(content)
 
             current_widget.file_path = file_path
-
-            file_info = QFileInfo(file_path)
-            file_name = file_info.fileName()
+            file_name = QFileInfo(file_path).fileName()
             self.tab_widget.setTabText(current_index, file_name)
 
     ########################################
@@ -115,14 +146,17 @@ class BlinkEditor(QMainWindow):
         del_tab_shortcut = QShortcut(Qt.CTRL + Qt.Key_W, self)
         del_tab_shortcut.activated.connect(self.delete_current_tab)
 
+    @update_focus_decorator
     def next_tab(self):
         current_index = (self.tab_widget.currentIndex() + 1) % self.tab_widget.count()
         self.tab_widget.setCurrentIndex(current_index)
 
+    @update_focus_decorator
     def prev_tab(self):
         current_index = (self.tab_widget.currentIndex() - 1) % self.tab_widget.count()
         self.tab_widget.setCurrentIndex(current_index)
 
+    @update_focus_decorator
     def delete_current_tab(self):
         current_index = self.tab_widget.currentIndex()
         self.tab_widget.removeTab(current_index)
