@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import QFileDialog, QPushButton, QShortcut
 from PyQt5.QtCore import Qt, QFileInfo
 from PyQt5.QtGui import QKeySequence
 
+import os
+
 class BlinkEditor(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -28,6 +30,7 @@ class BlinkEditor(QMainWindow):
         save_button.clicked.connect(self.save_tab)
 
         toolbar = self.addToolBar("Toolbar")
+        toolbar.addWidget(new_button)
         toolbar.addWidget(open_button)
         toolbar.addWidget(save_button)
 
@@ -43,22 +46,23 @@ class BlinkEditor(QMainWindow):
 
     def load_tab(self, file_path=None):
         text_buffer = QTextEdit(self) 
-        text_buffer.file_path = None;
         file_name = "untitled"
 
         if not file_path:
             file_path, _ = QFileDialog.getOpenFileName(self)
 
         if file_path:
-            with open(file_path, 'r') as file:
-                content = file.read()
-                text_buffer.setPlainText(content)
-            file_name = QFileInfo(file_path).fileName();
-            text_buffer.file_path = file_path
+            if os.path.exists(file_path):
+                with open(file_path, 'r') as file:
+                    content = file.read()
+                    text_buffer.setPlainText(content)
 
-        index = self.tab_widget.addTab(text_buffer, file_name)
-        self.tab_widget.setTabPosition(QTabWidget.South)
-        self.tab_widget.setCurrentIndex(index)
+            text_buffer.file_path = file_path;
+            file_name = QFileInfo(file_path).fileName();
+
+            index = self.tab_widget.addTab(text_buffer, file_name)
+            self.tab_widget.setTabPosition(QTabWidget.South)
+            self.tab_widget.setCurrentIndex(index)
 
     def save_tab(self):
         current_index = self.tab_widget.currentIndex()
@@ -69,19 +73,23 @@ class BlinkEditor(QMainWindow):
         else:
             file_path, _ = QFileDialog.getSaveFileName(self)
 
-        with open(file_path, 'w') as file:
-            content = current_widget.toPlainText()
-            file.write(content)
+        if file_path:
+            with open(file_path, 'w') as file:
+                content = current_widget.toPlainText()
+                file.write(content)
 
-        current_widget.file_path = file_path
+            current_widget.file_path = file_path
 
-        file_info = QFileInfo(file_path)
-        file_name = file_info.fileName()
-        self.tab_widget.setTabText(current_index, file_name)
+            file_info = QFileInfo(file_path)
+            file_name = file_info.fileName()
+            self.tab_widget.setTabText(current_index, file_name)
 
     # Shortcut setup / functions
     def setup_shorcuts(self):
-        save_shortcut = QShortcut(QKeySequence.Save, self)
+        new_shortcut = QShortcut(Qt.CTRL + Qt.Key_T, self)
+        new_shortcut.activated.connect(self.create_tab)
+
+        save_shortcut = QShortcut(Qt.CTRL + Qt.Key_S, self)
         save_shortcut.activated.connect(self.save_tab)
 
         open_shortcut = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_O), self)
