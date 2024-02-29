@@ -6,13 +6,15 @@ from PyQt5.QtGui import QKeySequence
 class BlinkEditor(QMainWindow):
     def __init__(self):
         super().__init__()
-
-        # Setup window information
         self.setWindowTitle("blink")
         self.setGeometry(100, 100, 800, 600)
         self.setWindowFlags(Qt.CustomizeWindowHint | Qt.FramelessWindowHint)
 
-        # Add widgets to window
+        self.setup_layout()
+
+        self.setup_shorcuts()
+
+    def setup_layout(self):
         self.tab_widget = QTabWidget(self);
         self.setCentralWidget(self.tab_widget)
 
@@ -29,20 +31,7 @@ class BlinkEditor(QMainWindow):
         toolbar.addWidget(open_button)
         toolbar.addWidget(save_button)
 
-        # Setup keyboard shortcuts
-        save_shortcut = QShortcut(QKeySequence.Save, self)
-        save_shortcut.activated.connect(self.save_tab)
-        open_shortcut = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_O), self)
-        open_shortcut.activated.connect(self.load_tab)
-
-        next_tab_shortcut = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Tab), self)
-        next_tab_shortcut.activated.connect(self.next_tab)
-        prev_tab_shortcut = QShortcut(QKeySequence(Qt.CTRL + Qt.SHIFT + Qt.Key_Tab), self)
-        prev_tab_shortcut.activated.connect(self.prev_tab)
-
-
-
-
+    # Tab control / file io
     def create_tab(self):
         text_buffer = QTextEdit(self) 
         text_buffer.file_path = None;
@@ -60,7 +49,6 @@ class BlinkEditor(QMainWindow):
         if not file_path:
             file_path, _ = QFileDialog.getOpenFileName(self)
 
-        # TODO make all these if checks less ugly
         if file_path:
             with open(file_path, 'r') as file:
                 content = file.read()
@@ -90,6 +78,20 @@ class BlinkEditor(QMainWindow):
         file_info = QFileInfo(file_path)
         file_name = file_info.fileName()
         self.tab_widget.setTabText(current_index, file_name)
+
+    # Shortcut setup / functions
+    def setup_shorcuts(self):
+        save_shortcut = QShortcut(QKeySequence.Save, self)
+        save_shortcut.activated.connect(self.save_tab)
+
+        open_shortcut = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_O), self)
+        open_shortcut.activated.connect(self.load_tab)
+
+        next_tab_shortcut = QShortcut(QKeySequence(Qt.CTRL + Qt.Key_Tab), self)
+        next_tab_shortcut.activated.connect(self.next_tab)
+
+        prev_tab_shortcut = QShortcut(QKeySequence(Qt.CTRL + Qt.SHIFT + Qt.Key_Tab), self)
+        prev_tab_shortcut.activated.connect(self.prev_tab)
 
     def next_tab(self):
         current_index = (self.tab_widget.currentIndex() + 1) % self.tab_widget.count()
