@@ -1,15 +1,18 @@
-from PyQt5.QtWidgets import QMainWindow, QTextEdit, QTabWidget
-from PyQt5.QtWidgets import QFileDialog, QPushButton, QStatusBar
+from PyQt5.QtWidgets import QMainWindow, QTabWidget, QTextEdit 
+from PyQt5.QtWidgets import QFileDialog, QPushButton, QShortcut
 from PyQt5.QtCore import Qt, QFileInfo
+from PyQt5.QtGui import QKeySequence
 
 class BlinkEditor(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        # Setup window information
         self.setWindowTitle("blink")
         self.setGeometry(100, 100, 800, 600)
         self.setWindowFlags(Qt.CustomizeWindowHint | Qt.FramelessWindowHint)
 
+        # Add widgets to window
         self.tab_widget = QTabWidget(self);
         self.setCentralWidget(self.tab_widget)
 
@@ -25,6 +28,10 @@ class BlinkEditor(QMainWindow):
         toolbar = self.addToolBar("Toolbar")
         toolbar.addWidget(open_button)
         toolbar.addWidget(save_button)
+
+        # Setup keyboard shortcuts
+        save_shortcut = QShortcut(QKeySequence.Save, self)
+        save_shortcut.activated.connect(self.save_tab)
 
     def create_tab(self):
         text_buffer = QTextEdit(self) 
