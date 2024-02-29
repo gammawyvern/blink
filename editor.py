@@ -71,6 +71,9 @@ class BlinkEditor(QMainWindow):
         current_index = self.tab_widget.currentIndex()
         current_widget = self.tab_widget.widget(current_index)
 
+        if current_index == -1:
+            return
+
         if getattr(current_widget, 'file_path', None):
             file_path = current_widget.file_path
         else:
