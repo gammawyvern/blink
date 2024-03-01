@@ -3,7 +3,7 @@ QMainWindow {
 }
 
 QTextEdit, QPlainTextEdit {
-    font-family: 'Roboto Mono', 'Courier New', monospace;
+    font-family: 'Courier New', monospace;
     font-size: 14px;
     color: #b8b8b8;
     background-color: #404040;
@@ -11,7 +11,7 @@ QTextEdit, QPlainTextEdit {
 }
 
 QPushButton {
-    font-family: 'Roboto Mono', 'Courier New', monospace;
+    font-family: 'Courier New', monospace;
     background-color: #505050;
     border: 2px solid #dddddd;
     color: #b8b8b8;
