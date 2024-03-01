@@ -3,7 +3,7 @@ from editor import BlinkEditor
 
 import sys;
 
-if __name__ == "__main__":
+def main():
     app = QApplication([])
     with open("./style.css", 'r') as file:
         app.setStyleSheet(file.read())
@@ -15,3 +15,5 @@ if __name__ == "__main__":
     window.show()
     app.exec_()
 
+if __name__ == "__main__":
+    main()
