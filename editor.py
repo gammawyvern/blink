@@ -35,7 +35,6 @@ class BlinkEditor(QMainWindow):
         self.setWindowFlags(Qt.CustomizeWindowHint | Qt.FramelessWindowHint)
 
         self.setup_layout()
-
         self.setup_shorcuts()
 
     def setup_layout(self):
@@ -98,9 +97,9 @@ class BlinkEditor(QMainWindow):
 
             text_buffer.file_path = file_path;
             file_name = QFileInfo(file_path).fileName();
-            file_extension = QFileInfo(file_name).suffix()
 
-            self.setup_syntax_highlighting(text_buffer, file_extension)
+            # file_extension = QFileInfo(file_name).suffix()
+            # self.setup_syntax_highlighting(text_buffer, file_extension)
 
             index = self.tab_widget.addTab(text_buffer, file_name)
             self.tab_widget.setTabPosition(QTabWidget.South)
@@ -127,8 +126,8 @@ class BlinkEditor(QMainWindow):
             current_widget.file_path = file_path
             file_name = QFileInfo(file_path).fileName()
 
-            file_extension = QFileInfo(file_name).suffix()
-            self.setup_syntax_highlighting(current_widget, file_extension)
+            # file_extension = QFileInfo(file_name).suffix()
+            # self.setup_syntax_highlighting(current_widget, file_extension)
 
             self.tab_widget.setTabText(current_index, file_name)
 
@@ -188,7 +187,4 @@ class BlinkEditor(QMainWindow):
         except:
             lexer = get_lexer_by_name('text')
 
-        return lexer
-
-
-
+        return lexer 
