@@ -3,10 +3,6 @@ from PyQt5.QtWidgets import QFileDialog, QPushButton, QShortcut
 from PyQt5.QtCore import Qt, QFileInfo
 from PyQt5.QtGui import QKeySequence
 
-from pygments import highlight
-from pygments.lexers import get_lexer_by_name
-from pygments.formatters import HtmlFormatter
-
 import os
 
 ########################################
@@ -104,9 +100,6 @@ class BlinkEditor(QMainWindow):
             text_buffer.file_path = file_path;
             file_name = QFileInfo(file_path).fileName();
 
-            # file_extension = QFileInfo(file_name).suffix()
-            # self.setup_syntax_highlighting(text_buffer, file_extension)
-
             index = self.tab_widget.addTab(text_buffer, file_name)
             self.tab_widget.setTabPosition(QTabWidget.South)
             self.tab_widget.setCurrentIndex(index)
@@ -131,9 +124,6 @@ class BlinkEditor(QMainWindow):
 
             current_widget.file_path = file_path
             file_name = QFileInfo(file_path).fileName()
-
-            # file_extension = QFileInfo(file_name).suffix()
-            # self.setup_syntax_highlighting(current_widget, file_extension)
 
             self.tab_widget.setTabText(current_index, file_name)
 
@@ -180,22 +170,4 @@ class BlinkEditor(QMainWindow):
     ########################################
     # Syntax highlighting
     ########################################
-
-    def setup_syntax_highlighting(self, text_edit, file_extension):
-        lexer = self.get_lexer(file_extension)
-        formatter = HtmlFormatter(style='colorful')
-        highlighted_code = highlight(text_edit.toPlainText(), lexer, formatter)
-        text_edit.setHtml(highlighted_code)
-
-        lexer = self.get_lexer(file_extension)
-        formatter = HtmlFormatter(style='colorful')
-        highlighted_code = highlight(text_edit.toPlainText(), lexer, formatter)
-
-    def get_lexer(self, file_extension):
-        try:
-            lexer = get_lexer_by_name(file_extension)
-        except:
-            lexer = get_lexer_by_name('text')
-
-        return lexer 
 
