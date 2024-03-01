@@ -75,8 +75,8 @@ class BlinkEditor(QMainWindow):
         text_buffer.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         text_buffer.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
-        font_metrics = QFontMetrics(text_buffer.font())
-        text_buffer.setTabStopWidth(4 * font_metrics.width(' '))
+        tab_stop_width = 4 * QFontMetrics(text_buffer.font()).averageCharWidth()
+        text_buffer.setTabStopDistance(tab_stop_width)
 
         text_buffer.file_path = None
         file_name = "untitled"
@@ -91,8 +91,8 @@ class BlinkEditor(QMainWindow):
         text_buffer.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         text_buffer.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
-        font_metrics = QFontMetrics(text_buffer.font())
-        text_buffer.setTabStopWidth(4 * font_metrics.width(' '))
+        tab_stop_width = 4 * QFontMetrics(text_buffer.font()).averageCharWidth()
+        text_buffer.setTabStopDistance(tab_stop_width)
 
         file_name = "untitled"
 
