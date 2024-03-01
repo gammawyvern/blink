@@ -28,7 +28,6 @@ class BlinkEditor(QMainWindow):
         super().__init__()
         self.setWindowTitle("blink")
         self.setGeometry(100, 100, 800, 600)
-        self.setWindowFlags(Qt.CustomizeWindowHint | Qt.FramelessWindowHint)
 
         self.setup_layout()
         self.setup_shorcuts()
@@ -75,9 +74,10 @@ class BlinkEditor(QMainWindow):
         text_buffer.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         text_buffer.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
-        text_buffer.setFont(QFont("Monospace"))
-        tab_stop_width = 4 * QFontMetrics(text_buffer.font()).width(' ')
-        text_buffer.setTabStopDistance(tab_stop_width)
+        text_font = QFont("Consolas")
+        text_buffer.setFont(text_font)
+        tab_stop_dist = 4 * (QFontMetrics(text_font).width(' ') - 1)
+        text_buffer.setTabStopDistance(tab_stop_dist)
 
         text_buffer.file_path = None
         file_name = "untitled"
