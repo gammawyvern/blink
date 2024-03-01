@@ -8,13 +8,16 @@
     - [x] There is another bug related to the decorator now
 
 #### Most Important
-- [ ] Remove movable tab on menu (Only shows up on Windows) 
+- [x] Remove movable tab on menu 
 - [ ] Fix text formatting in general
     - [ ] Copy/pasting doesn't auto change font
     - [ ] Fix tabs in text 
 - [ ] Right now crashed when attempting to load certain files
     - Files encoded in certain ways crash the loading,
         such as .wav files
+- [ ] Properly implement QTextEdit for text instead of QPlainTextEdit
+- [ ] Add a way to open a directory 
+- [ ] Add file tree from current directory
 
 #### Difficult
 - [ ] Syntax highlighting

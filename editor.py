@@ -1,7 +1,7 @@
-from PyQt5.QtWidgets import QMainWindow, QTabWidget, QTextEdit 
+from PyQt5.QtWidgets import QMainWindow, QTabWidget, QPlainTextEdit 
 from PyQt5.QtWidgets import QFileDialog, QPushButton, QShortcut
 from PyQt5.QtCore import Qt, QFileInfo
-from PyQt5.QtGui import QKeySequence
+from PyQt5.QtGui import QFontMetrics, QKeySequence
 
 import os
 
@@ -34,7 +34,7 @@ class BlinkEditor(QMainWindow):
         self.setup_shorcuts()
 
     def setup_layout(self):
-        self.tab_widget = QTabWidget(self);
+        self.tab_widget = QTabWidget(self)
         self.setCentralWidget(self.tab_widget)
 
         new_button = QPushButton("New", self)
@@ -71,23 +71,28 @@ class BlinkEditor(QMainWindow):
 
     @update_focus_decorator
     def create_tab(self):
-        text_buffer = QTextEdit(self) 
+        text_buffer = QPlainTextEdit(self) 
         text_buffer.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         text_buffer.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
-        text_buffer.file_path = None;
+        font_metrics = QFontMetrics(text_buffer.font())
+        text_buffer.setTabStopWidth(4 * font_metrics.width(' '))
+
+        text_buffer.file_path = None
         file_name = "untitled"
 
         index = self.tab_widget.addTab(text_buffer, file_name)
         self.tab_widget.setTabPosition(QTabWidget.South)
         self.tab_widget.setCurrentIndex(index)
-        text_buffer.setFocus()
 
     @update_focus_decorator
     def load_tab(self, file_path=None):
-        text_buffer = QTextEdit(self) 
+        text_buffer = QPlainTextEdit(self) 
         text_buffer.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         text_buffer.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+
+        font_metrics = QFontMetrics(text_buffer.font())
+        text_buffer.setTabStopWidth(4 * font_metrics.width(' '))
 
         file_name = "untitled"
 
@@ -100,13 +105,12 @@ class BlinkEditor(QMainWindow):
                     content = file.read()
                     text_buffer.setPlainText(content)
 
-            text_buffer.file_path = file_path;
-            file_name = QFileInfo(file_path).fileName();
+            text_buffer.file_path = file_path
+            file_name = QFileInfo(file_path).fileName()
 
             index = self.tab_widget.addTab(text_buffer, file_name)
             self.tab_widget.setTabPosition(QTabWidget.South)
             self.tab_widget.setCurrentIndex(index)
-            text_buffer.setFocus()
 
     @update_focus_decorator
     def save_tab(self):
@@ -169,6 +173,10 @@ class BlinkEditor(QMainWindow):
     def delete_current_tab(self):
         current_index = self.tab_widget.currentIndex()
         self.tab_widget.removeTab(current_index)
+
+    ########################################
+    # Formatting
+    ########################################
 
     ########################################
     # Syntax highlighting
