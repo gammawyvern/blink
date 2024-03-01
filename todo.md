@@ -7,3 +7,14 @@
 - [x] Fix error from saving with no tabs open
     - [x] There is another bug related to the decorator now
 
+#### Most Important
+- [ ] Remove movable tab on menu (Only shows up on Windows) 
+- [ ] Fix text formatting in general
+    - [ ] Copy/pasting doesn't auto change font
+    - [ ] Fix tabs in text 
+
+#### Difficult
+- [ ] Syntax highlighting
+    - Right now only lints / changes font and size ???
+- [ ] Run code in editor
+
