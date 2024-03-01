@@ -132,8 +132,8 @@ class BlinkEditor(QMainWindow):
             current_widget.file_path = file_path
             file_name = QFileInfo(file_path).fileName()
 
-            # file_extension = QFileInfo(file_name).suffix()
-            # self.setup_syntax_highlighting(current_widget, file_extension)
+            file_extension = QFileInfo(file_name).suffix()
+            self.setup_syntax_highlighting(current_widget, file_extension)
 
             self.tab_widget.setTabText(current_index, file_name)
 
@@ -187,6 +187,10 @@ class BlinkEditor(QMainWindow):
         highlighted_code = highlight(text_edit.toPlainText(), lexer, formatter)
         text_edit.setHtml(highlighted_code)
 
+        lexer = self.get_lexer(file_extension)
+        formatter = HtmlFormatter(style='colorful')
+        highlighted_code = highlight(text_edit.toPlainText(), lexer, formatter)
+
     def get_lexer(self, file_extension):
         try:
             lexer = get_lexer_by_name(file_extension)
@@ -194,3 +198,4 @@ class BlinkEditor(QMainWindow):
             lexer = get_lexer_by_name('text')
 
         return lexer 
+
