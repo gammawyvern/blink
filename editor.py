@@ -132,8 +132,8 @@ class BlinkEditor(QMainWindow):
             current_widget.file_path = file_path
             file_name = QFileInfo(file_path).fileName()
 
-            file_extension = QFileInfo(file_name).suffix()
-            self.setup_syntax_highlighting(current_widget, file_extension)
+            # file_extension = QFileInfo(file_name).suffix()
+            # self.setup_syntax_highlighting(current_widget, file_extension)
 
             self.tab_widget.setTabText(current_index, file_name)
 
