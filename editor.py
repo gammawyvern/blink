@@ -51,6 +51,9 @@ class BlinkEditor(QMainWindow):
         toolbar.addWidget(open_button)
         toolbar.addWidget(save_button)
 
+        toolbar.setMovable(False)
+        self.addToolBar(Qt.LeftToolBarArea, toolbar)
+
     ########################################
     # Decorator functions 
     ########################################
