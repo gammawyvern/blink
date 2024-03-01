@@ -1,11 +1,15 @@
 from PyQt5.QtWidgets import QApplication 
 from editor import BlinkEditor
 
-import sys;
+import sys
+import os
 
 def main():
     app = QApplication([])
-    with open("./style.css", 'r') as file:
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    style_file_path = os.path.join(script_dir, "style.css")
+    with open(style_file_path, 'r') as file:
         app.setStyleSheet(file.read())
 
     window = BlinkEditor()
