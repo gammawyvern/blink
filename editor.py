@@ -73,6 +73,9 @@ class BlinkEditor(QMainWindow):
     @update_focus_decorator
     def create_tab(self):
         text_buffer = QTextEdit(self) 
+        text_buffer.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        text_buffer.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+
         text_buffer.file_path = None;
         file_name = "untitled"
 
@@ -84,6 +87,9 @@ class BlinkEditor(QMainWindow):
     @update_focus_decorator
     def load_tab(self, file_path=None):
         text_buffer = QTextEdit(self) 
+        text_buffer.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        text_buffer.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+
         file_name = "untitled"
 
         if not file_path:
