@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QTabWidget, QPlainTextEdit 
 from PyQt5.QtWidgets import QFileDialog, QPushButton, QShortcut
 from PyQt5.QtCore import Qt, QFileInfo
-from PyQt5.QtGui import QFontMetrics, QKeySequence
+from PyQt5.QtGui import QFontMetrics, QFont, QKeySequence
 
 import os
 
@@ -75,7 +75,8 @@ class BlinkEditor(QMainWindow):
         text_buffer.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         text_buffer.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
-        tab_stop_width = 4 * QFontMetrics(text_buffer.font()).averageCharWidth()
+        text_buffer.setFont(QFont("Monospace"))
+        tab_stop_width = 4 * QFontMetrics(text_buffer.font()).width(' ')
         text_buffer.setTabStopDistance(tab_stop_width)
 
         text_buffer.file_path = None
@@ -91,7 +92,8 @@ class BlinkEditor(QMainWindow):
         text_buffer.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         text_buffer.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
-        tab_stop_width = 4 * QFontMetrics(text_buffer.font()).averageCharWidth()
+        text_buffer.setFont(QFont("Monospace"))
+        tab_stop_width = 4 * QFontMetrics(text_buffer.font()).width(' ')
         text_buffer.setTabStopDistance(tab_stop_width)
 
         file_name = "untitled"

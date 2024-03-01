@@ -3,7 +3,8 @@ QMainWindow {
 }
 
 QTextEdit, QPlainTextEdit {
-    font-family: 'Courier New', monospace;
+    font-family: 'Consolas', monospace;
+    white-space: nowrap;
     font-size: 14px;
     color: #b8b8b8;
     background-color: #404040;
@@ -11,7 +12,7 @@ QTextEdit, QPlainTextEdit {
 }
 
 QPushButton {
-    font-family: 'Courier New', monospace;
+    font-family: 'Consolas', monospace;
     background-color: #505050;
     border: 2px solid #dddddd;
     color: #b8b8b8;
