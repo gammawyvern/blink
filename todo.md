@@ -12,7 +12,7 @@
 - [ ] Fix text formatting in general
     - [ ] Copy/pasting doesn't auto change font
     - [ ] Fix tabs in text 
-- [ ] Right now crashed when attempting to load certain files
+- [x] Right now crashed when attempting to load certain files
     - Files encoded in certain ways crash the loading,
         such as .wav files
 - [ ] Properly implement QTextEdit for text instead of QPlainTextEdit

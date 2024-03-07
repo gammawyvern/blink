@@ -95,16 +95,19 @@ class BlinkEditor(QMainWindow):
         if not file_path:
             file_path, _ = QFileDialog.getOpenFileName(self)
 
-        if file_path:
-            if os.path.exists(file_path):
-                with open(file_path, 'r') as file:
-                    content = file.read()
-                    text_buffer.setPlainText(content)
+        try:
+            if file_path:
+                if os.path.exists(file_path):
+                    with open(file_path, 'r') as file:
+                        content = file.read()
+                        text_buffer.setPlainText(content)
 
-            text_buffer.file_path = file_path
-            file_name = QFileInfo(file_path).fileName()
+                text_buffer.file_path = file_path
+                file_name = QFileInfo(file_path).fileName()
 
-            index = self.tab_widget.addTab(text_buffer, file_name)
+                index = self.tab_widget.addTab(text_buffer, file_name)
+        except Exception as e:
+            print("Could not load file");
 
     @update_focus_decorator
     def save_tab(self):
