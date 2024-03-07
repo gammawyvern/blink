@@ -18,6 +18,8 @@
 - [ ] Properly implement QTextEdit for text instead of QPlainTextEdit
 - [ ] Add a way to open a directory 
 - [ ] Add file tree from current directory
+- [ ] Don't allow opening same file more than once
+    - Just make it switch to the tab if file already open
 
 #### Difficult
 - [ ] Syntax highlighting
